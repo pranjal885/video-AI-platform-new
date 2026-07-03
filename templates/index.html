@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Video AI Platform</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="display-4 fw-bold text-success">
+
+            🎬 Video AI Platform
+
+        </h1>
+
+        <p class="lead text-muted">
+
+            Upload a video and instantly generate
+            transcripts, summaries, subtitles,
+            AI-powered answers, PDF reports and more.
+
+        </p>
+
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body p-5">
+
+                    <form
+                        action="/upload"
+                        method="POST"
+                        enctype="multipart/form-data">
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Select Video
+
+                            </label>
+
+                            <input
+                                type="file"
+                                name="video"
+                                class="form-control form-control-lg"
+                                accept="video/*"
+                                required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Language
+
+                            </label>
+
+                            <select
+    class="form-select form-select-lg"
+    name="language">
+
+    <option value="auto" selected>Auto Detect</option>
+
+    <option value="en">English</option>
+
+    <option value="hi">Hindi</option>
+
+    <option value="mr">Marathi</option>
+
+    <option value="gu">Gujarati</option>
+
+    <option value="bn">Bengali</option>
+
+    <option value="pa">Punjabi</option>
+
+    <option value="kn">Kannada</option>
+
+    <option value="ml">Malayalam</option>
+
+    <option value="ta">Tamil</option>
+
+    <option value="te">Telugu</option>
+
+    <option value="ur">Urdu</option>
+
+    <option value="or">Odia</option>
+
+    <option value="as">Assamese</option>
+
+</select>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success btn-lg w-100">
+
+                            🚀 Process Video
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-5 text-center">
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>🎙️</h4>
+
+                    <h5>Speech to Text</h5>
+
+                    <p class="text-muted">
+
+                        Accurate transcription using Faster Whisper.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>📝</h4>
+
+                    <h5>AI Summary</h5>
+
+                    <p class="text-muted">
+
+                        Generate concise summaries using BART.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>💬</h4>
+
+                    <h5>AI Chat</h5>
+
+                    <p class="text-muted">
+
+                        Ask questions about the uploaded video.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>📄</h4>
+
+                    <h5>Export</h5>
+
+                    <p class="text-muted">
+
+                        Download Transcript, PDF, DOCX and Subtitle.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
