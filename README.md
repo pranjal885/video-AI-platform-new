@@ -482,7 +482,7 @@ This project is licensed under the **MIT License**.
 
 # 📧 Contact
 
-**Developer:** Vaibhav Nalawade
+**Developer:** Brimwing Softverse
 
 **Project:** Web AI Platform – Video to Text (Multi-Language, Offline/Local)
 
