@@ -217,4 +217,19 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Project generated folders
 uploads/
+audio/
+temp/
+subtitles/
+summaries/
+transcripts/
+
+# Optional generated data
+outputs/
+
+# Empty model folder
+models/
+
+# Chroma database (ignore if generated automatically)
+chroma_db/
