@@ -15,7 +15,7 @@ def get_summarizer():
 
         summarizer = pipeline(
             task="summarization",
-            model="facebook/bart-large-cnn"
+            model="sshleifer/distilbart-cnn-12-6"
         )
 
         print("Summary Model Loaded Successfully!")
