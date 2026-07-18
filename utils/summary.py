@@ -1,65 +1,25 @@
-from transformers import pipeline
+import os
+import google.generativeai as genai
 
-# Global summarizer variable
-summarizer = None
+genai.configure(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
-
-def get_summarizer():
-    """
-    Load the summarization model only once.
-    """
-    global summarizer
-
-    if summarizer is None:
-        print("Loading Summary Model...")
-
-        summarizer = pipeline(
-            task="summarization",
-            model="sshleifer/distilbart-cnn-12-6"
-        )
-
-        print("Summary Model Loaded Successfully!")
-
-    return summarizer
-
-
-def chunk_text(text, chunk_size=2500):
-
-    chunks = []
-
-    for i in range(0, len(text), chunk_size):
-        chunks.append(
-            text[i:i + chunk_size]
-        )
-
-    return chunks
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 def generate_summary(text):
 
-    # Load model only when needed
-    summarizer = get_summarizer()
+    prompt = f"""
+You are an expert text summarizer.
 
-    if len(text.split()) < 60:
-        return text
+Summarize the following transcript in clear bullet points.
 
-    chunks = chunk_text(text)
+Transcript:
 
-    summaries = []
+{text}
+"""
 
-    for chunk in chunks:
+    response = model.generate_content(prompt)
 
-        result = summarizer(
-            chunk,
-            max_length=150,
-            min_length=40,
-            do_sample=False
-        )
-
-        summaries.append(
-            result[0]["summary_text"]
-        )
-
-    final_summary = "\n\n".join(summaries)
-
-    return final_summary
+    return response.text
