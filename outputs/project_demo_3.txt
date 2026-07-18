@@ -1,0 +1,32 @@
+Welcome to the project. This is business lead generator project built using flask, python, pandas, request and beautiful soap.
+The objective of the project is to allow users to search for businesses based on city, country and business sector.
+Generate leads dynamically and export the results into a CSV file.
+Let me walk you through the project.
+First, this is the project structure.
+The main file is app.py which handles routing user input and rendering the results.
+Then scraper.py file contains the data collection logic and returns the process business data.
+The templates folder contains the front end pages including the search page and the result page.
+The sources folder is designed for future integration such as India, mart, yellow pages, google maps and other business directories.
+Now let me run the application.
+I have deployed the application so this is live render link.
+Simply I will put city equals to city Pune, country India, business we can put as hospital.
+Generate leads.
+We have got the output total leads 50 countries covered one sector covered one.
+So these are all the company names.
+Here we can see the generated business leads along with details such as company name, sector, website, city and country.
+One important feature of the application is CSV export by clicking on download CSV button.
+Here we can see the file is downloaded.
+If I open the file, it's opening.
+Yes, it has open.
+So simply the file can be exported.
+Now let me briefly explain the backend workflow.
+When the user submits the search form, Flask receives the input parameters.
+The request is passed to the scraper module.
+The scraper collects and processes the business data and converts it into a pandas data frame and returns the structured results.
+The application then displays the results on the dashboard and also generates a downloadable CSV file.
+The project is designed using a modular architecture.
+This allows additional business data sources such as India, mart, google maps, yellow pages and country specific directories to be integrated.
+Without changing the user interface, future enhancements can include proxy rotation, request throttling, multi source aggregation, duplicate removal and large scale lead collection.
+This project demonstrated web scraping, data processing, CSV generation, Flask application development and scalable system design.
+Thank you for your time.
+I look forward to your feedback and discussion.

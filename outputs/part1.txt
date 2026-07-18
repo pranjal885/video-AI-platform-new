@@ -1,0 +1,22 @@
+This application uses artificial intelligence to process videos by automatically generating transcripts, summer each subtitles, downloadable documents and an AI power chat board that answers questions based on the uploaded video.
+I'll run the project.
+Till the time it loads, I'll explain the text stack.
+This project is built using flask for the backend, faster whisper for speech to text transcription, hugging face transformers for AI summarization, movie by an FMP, FFM, PEG for audio extraction,
+settings, transformers for chroma DB.
+With chroma DB for vector embeddings, OLAMA with LAMA 3.2 for local AI chat board.
+I'll open this.
+This is the homepage.
+Here user can upload the video.
+And also from here, from this drop down, he can select the different languages or to detect is the default.
+I'll select the video.
+Now process video.
+Now this will take some time.
+Within that time, I'll explain further.
+Once the video is uploaded, the application performs several operations automatically.
+First, the audio is extracted from the video.
+Next, faster whisper converts this speech into text.
+The transcript is then summarized using an AI summarization model.
+Subtitles are generated in SRT format.
+The transcript is embedded into chroma DB using sentence transformers, enabling semantic search for the chat board.
+Finally, PDF and doc summarizes are generated for download.
+Now it's working.

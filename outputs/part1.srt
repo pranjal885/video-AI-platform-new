@@ -1,0 +1,88 @@
+1
+00:00:00,000 --> 00:00:16,000
+This application uses artificial intelligence to process videos by automatically generating transcripts, summer each subtitles, downloadable documents and an AI power chat board that answers questions based on the uploaded video.
+
+2
+00:00:16,000 --> 00:00:18,000
+I'll run the project.
+
+3
+00:00:18,000 --> 00:00:32,689
+Till the time it loads, I'll explain the text stack.
+
+4
+00:00:32,689 --> 00:00:49,689
+This project is built using flask for the backend, faster whisper for speech to text transcription, hugging face transformers for AI summarization, movie by an FMP, FFM, PEG for audio extraction,
+
+5
+00:00:49,689 --> 00:00:53,689
+settings, transformers for chroma DB.
+
+6
+00:00:53,689 --> 00:01:00,689
+With chroma DB for vector embeddings, OLAMA with LAMA 3.2 for local AI chat board.
+
+7
+00:01:00,689 --> 00:01:05,340
+I'll open this.
+
+8
+00:01:05,340 --> 00:01:16,079
+This is the homepage.
+
+9
+00:01:16,079 --> 00:01:19,079
+Here user can upload the video.
+
+10
+00:01:19,079 --> 00:01:30,079
+And also from here, from this drop down, he can select the different languages or to detect is the default.
+
+11
+00:01:30,079 --> 00:01:32,079
+I'll select the video.
+
+12
+00:01:32,079 --> 00:01:42,049
+Now process video.
+
+13
+00:01:42,049 --> 00:01:45,049
+Now this will take some time.
+
+14
+00:01:45,049 --> 00:01:48,049
+Within that time, I'll explain further.
+
+15
+00:01:48,049 --> 00:01:55,939
+Once the video is uploaded, the application performs several operations automatically.
+
+16
+00:01:55,939 --> 00:01:59,939
+First, the audio is extracted from the video.
+
+17
+00:01:59,939 --> 00:02:02,939
+Next, faster whisper converts this speech into text.
+
+18
+00:02:02,939 --> 00:02:07,939
+The transcript is then summarized using an AI summarization model.
+
+19
+00:02:07,939 --> 00:02:10,939
+Subtitles are generated in SRT format.
+
+20
+00:02:10,939 --> 00:02:19,939
+The transcript is embedded into chroma DB using sentence transformers, enabling semantic search for the chat board.
+
+21
+00:02:19,939 --> 00:02:25,939
+Finally, PDF and doc summarizes are generated for download.
+
+22
+00:02:25,939 --> 00:02:32,800
+Now it's working.
+

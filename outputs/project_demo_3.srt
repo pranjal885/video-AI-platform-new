@@ -1,0 +1,128 @@
+1
+00:00:00,000 --> 00:00:09,000
+Welcome to the project. This is business lead generator project built using flask, python, pandas, request and beautiful soap.
+
+2
+00:00:09,000 --> 00:00:17,000
+The objective of the project is to allow users to search for businesses based on city, country and business sector.
+
+3
+00:00:17,000 --> 00:00:22,000
+Generate leads dynamically and export the results into a CSV file.
+
+4
+00:00:22,000 --> 00:00:24,000
+Let me walk you through the project.
+
+5
+00:00:24,000 --> 00:00:28,000
+First, this is the project structure.
+
+6
+00:00:28,000 --> 00:00:37,000
+The main file is app.py which handles routing user input and rendering the results.
+
+7
+00:00:37,000 --> 00:00:44,000
+Then scraper.py file contains the data collection logic and returns the process business data.
+
+8
+00:00:44,000 --> 00:00:52,000
+The templates folder contains the front end pages including the search page and the result page.
+
+9
+00:00:52,000 --> 00:01:03,000
+The sources folder is designed for future integration such as India, mart, yellow pages, google maps and other business directories.
+
+10
+00:01:03,000 --> 00:01:06,000
+Now let me run the application.
+
+11
+00:01:06,000 --> 00:01:11,000
+I have deployed the application so this is live render link.
+
+12
+00:01:12,000 --> 00:01:25,000
+Simply I will put city equals to city Pune, country India, business we can put as hospital.
+
+13
+00:01:25,000 --> 00:01:29,000
+Generate leads.
+
+14
+00:01:29,000 --> 00:01:37,000
+We have got the output total leads 50 countries covered one sector covered one.
+
+15
+00:01:37,000 --> 00:01:40,000
+So these are all the company names.
+
+16
+00:01:40,000 --> 00:01:51,000
+Here we can see the generated business leads along with details such as company name, sector, website, city and country.
+
+17
+00:01:51,000 --> 00:01:59,000
+One important feature of the application is CSV export by clicking on download CSV button.
+
+18
+00:01:59,000 --> 00:02:03,000
+Here we can see the file is downloaded.
+
+19
+00:02:03,000 --> 00:02:10,900
+If I open the file, it's opening.
+
+20
+00:02:10,900 --> 00:02:12,900
+Yes, it has open.
+
+21
+00:02:12,900 --> 00:02:15,900
+So simply the file can be exported.
+
+22
+00:02:15,900 --> 00:02:23,300
+Now let me briefly explain the backend workflow.
+
+23
+00:02:23,300 --> 00:02:29,300
+When the user submits the search form, Flask receives the input parameters.
+
+24
+00:02:29,300 --> 00:02:32,300
+The request is passed to the scraper module.
+
+25
+00:02:32,300 --> 00:02:41,300
+The scraper collects and processes the business data and converts it into a pandas data frame and returns the structured results.
+
+26
+00:02:41,300 --> 00:02:47,300
+The application then displays the results on the dashboard and also generates a downloadable CSV file.
+
+27
+00:02:47,300 --> 00:02:51,300
+The project is designed using a modular architecture.
+
+28
+00:02:51,300 --> 00:03:00,300
+This allows additional business data sources such as India, mart, google maps, yellow pages and country specific directories to be integrated.
+
+29
+00:03:01,300 --> 00:03:14,300
+Without changing the user interface, future enhancements can include proxy rotation, request throttling, multi source aggregation, duplicate removal and large scale lead collection.
+
+30
+00:03:14,300 --> 00:03:23,300
+This project demonstrated web scraping, data processing, CSV generation, Flask application development and scalable system design.
+
+31
+00:03:23,300 --> 00:03:24,300
+Thank you for your time.
+
+32
+00:03:24,300 --> 00:03:27,300
+I look forward to your feedback and discussion.
+
