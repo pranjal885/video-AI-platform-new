@@ -1,19 +1,34 @@
 import os
-
 from faster_whisper import WhisperModel
 
-print("Loading Whisper Model...")
+# Global model variable
+model = None
 
-model = WhisperModel(
-    "base",
-    device="cpu",
-    compute_type="int8"
-)
 
-print("Whisper Model Loaded Successfully!")
+def get_model():
+    """
+    Load the Whisper model only once.
+    """
+    global model
+
+    if model is None:
+        print("Loading Whisper Model...")
+
+        model = WhisperModel(
+            "base",
+            device="cpu",
+            compute_type="int8"
+        )
+
+        print("Whisper Model Loaded Successfully!")
+
+    return model
 
 
 def transcribe_audio(audio_path, language="auto"):
+
+    # Load model only when needed
+    model = get_model()
 
     print("\n==============================")
     print("Starting Transcription...")
@@ -43,7 +58,6 @@ def transcribe_audio(audio_path, language="auto"):
     transcript_lines = []
 
     for segment in segments:
-
         text = segment.text.strip()
 
         if text:
@@ -68,7 +82,6 @@ def transcribe_audio(audio_path, language="auto"):
         "w",
         encoding="utf-8"
     ) as file:
-
         file.write(transcript)
 
     print(f"Detected Language : {info.language}")

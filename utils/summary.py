@@ -1,13 +1,26 @@
 from transformers import pipeline
 
-print("Loading Summary Model...")
+# Global summarizer variable
+summarizer = None
 
-summarizer = pipeline(
-    task="summarization",
-    model="facebook/bart-large-cnn"
-)
 
-print("Summary Model Loaded Successfully!")
+def get_summarizer():
+    """
+    Load the summarization model only once.
+    """
+    global summarizer
+
+    if summarizer is None:
+        print("Loading Summary Model...")
+
+        summarizer = pipeline(
+            task="summarization",
+            model="facebook/bart-large-cnn"
+        )
+
+        print("Summary Model Loaded Successfully!")
+
+    return summarizer
 
 
 def chunk_text(text, chunk_size=2500):
@@ -15,7 +28,6 @@ def chunk_text(text, chunk_size=2500):
     chunks = []
 
     for i in range(0, len(text), chunk_size):
-
         chunks.append(
             text[i:i + chunk_size]
         )
@@ -24,6 +36,9 @@ def chunk_text(text, chunk_size=2500):
 
 
 def generate_summary(text):
+
+    # Load model only when needed
+    summarizer = get_summarizer()
 
     if len(text.split()) < 60:
         return text
@@ -35,15 +50,10 @@ def generate_summary(text):
     for chunk in chunks:
 
         result = summarizer(
-
             chunk,
-
             max_length=150,
-
             min_length=40,
-
             do_sample=False
-
         )
 
         summaries.append(

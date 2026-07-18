@@ -1,11 +1,40 @@
-import requests
+import os
+import google.generativeai as genai
+from dotenv import load_dotenv
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+# Load environment variables
+load_dotenv()
 
-MODEL_NAME = "llama3.2:3b"
+# Configure Gemini API
+genai.configure(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+
+# Global model variable
+model = None
+
+
+def get_model():
+    """
+    Load the Gemini model only once.
+    """
+    global model
+
+    if model is None:
+        print("Loading Gemini Model...")
+
+        model = genai.GenerativeModel(
+            "gemini-2.5-flash"
+        )
+
+        print("Gemini Model Loaded Successfully!")
+
+    return model
 
 
 def ask_llm(context, question):
+
+    model = get_model()
 
     prompt = f"""
 You are an intelligent AI assistant for uploaded videos.
@@ -39,42 +68,13 @@ Answer
 
     try:
 
-        response = requests.post(
+        response = model.generate_content(prompt)
 
-            OLLAMA_URL,
+        if response.text:
+            return response.text.strip()
 
-            json={
-                "model": MODEL_NAME,
-                "prompt": prompt,
-                "stream": False
-            },
-
-            timeout=120
-
-        )
-
-        response.raise_for_status()
-
-        data = response.json()
-
-        return data.get(
-            "response",
-            "No response received from the model."
-        )
-
-    except requests.exceptions.ConnectionError:
-
-        return (
-            "Unable to connect to Ollama.\n\n"
-            "Please make sure Ollama is running."
-        )
-
-    except requests.exceptions.Timeout:
-
-        return (
-            "The AI model took too long to respond."
-        )
+        return "No response generated."
 
     except Exception as e:
 
-        return f"Unexpected Error:\n{str(e)}"
+        return f"Gemini Error:\n{str(e)}"

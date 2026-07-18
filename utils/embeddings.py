@@ -1,19 +1,44 @@
 import chromadb
 from sentence_transformers import SentenceTransformer
 
-print("Loading Embedding Model...")
+# Global variables
+embedding_model = None
+client = None
+collection = None
 
-embedding_model = SentenceTransformer(
-    "all-MiniLM-L6-v2"
-)
 
-print("Embedding Model Loaded!")
+def get_embedding_model():
+    global embedding_model
 
-client = chromadb.PersistentClient(path="chroma_db")
+    if embedding_model is None:
+        print("Loading Embedding Model...")
 
-collection = client.get_or_create_collection(
-    name="video_transcripts"
-)
+        embedding_model = SentenceTransformer(
+            "all-MiniLM-L6-v2"
+        )
+
+        print("Embedding Model Loaded!")
+
+    return embedding_model
+
+
+def get_collection():
+    global client, collection
+
+    if collection is None:
+        print("Initializing ChromaDB...")
+
+        client = chromadb.PersistentClient(
+            path="chroma_db"
+        )
+
+        collection = client.get_or_create_collection(
+            name="video_transcripts"
+        )
+
+        print("ChromaDB Ready!")
+
+    return collection
 
 
 def split_text(
@@ -44,12 +69,14 @@ def store_transcript(
     source="uploaded_video"
 ):
 
+    embedding_model = get_embedding_model()
+    collection = get_collection()
+
     try:
 
         existing = collection.get()
 
         if existing["ids"]:
-
             collection.delete(
                 ids=existing["ids"]
             )
@@ -71,7 +98,6 @@ def store_transcript(
     metadatas = []
 
     for _ in chunks:
-
         metadatas.append(
             {
                 "source": source
@@ -79,15 +105,10 @@ def store_transcript(
         )
 
     collection.add(
-
         ids=ids,
-
         documents=chunks,
-
         embeddings=embeddings,
-
         metadatas=metadatas
-
     )
 
     print(f"Stored {len(chunks)} chunks.")
@@ -98,18 +119,18 @@ def search_transcript(
     top_k=3
 ):
 
+    embedding_model = get_embedding_model()
+    collection = get_collection()
+
     question_embedding = embedding_model.encode(
         question
     ).tolist()
 
     results = collection.query(
-
         query_embeddings=[
             question_embedding
         ],
-
         n_results=top_k
-
     )
 
     return "\n".join(
