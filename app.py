@@ -16,7 +16,7 @@ from utils.summary import generate_summary
 from utils.subtitle import generate_subtitle
 from utils.pdf_generator import generate_pdf
 from utils.doc_generator import generate_doc
-from utils.embeddings import store_transcript, search_transcript
+# from utils.embeddings import store_transcript, search_transcript
 from utils.chatbot import ask_llm
 
 app = Flask(__name__)
@@ -90,8 +90,8 @@ def upload():
         )
         print("6. Subtitle generated")
 
-        store_transcript(transcript)
-        print("7. Transcript stored in ChromaDB")
+        #store_transcript(transcript)
+        #print("7. Transcript stored in ChromaDB")
 
         base_name = os.path.splitext(filename)[0]
 
@@ -174,25 +174,30 @@ def download_doc():
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    return "Chat feature is temporarily disabled."
 
-    question = request.form["question"]
 
-    context = search_transcript(question)
+# @app.route("/chat", methods=["POST"])
+# def chat():
 
-    answer = ask_llm(
-        context,
-        question
-    )
+#     question = request.form["question"]
 
-    return render_template(
-        "result.html",
-        filename=current_video["filename"],
-        audio=current_video["audio"],
-        transcript=current_video["transcript"],
-        summary=current_video["summary"],
-        language=current_video["language"],
-        answer=answer
-    )
+#     context = search_transcript(question)
+
+#     answer = ask_llm(
+#         context,
+#         question
+#     )
+
+#     return render_template(
+#         "result.html",
+#         filename=current_video["filename"],
+#         audio=current_video["audio"],
+#         transcript=current_video["transcript"],
+#         summary=current_video["summary"],
+#         language=current_video["language"],
+#         answer=answer
+#     )
 
 
 if __name__ == "__main__":
