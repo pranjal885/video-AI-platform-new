@@ -1,17 +1,5 @@
 import os
 
-from faster_whisper import WhisperModel
-
-print("Loading Subtitle Generator...")
-
-model = WhisperModel(
-    "base",
-    device="cpu",
-    compute_type="int8"
-)
-
-print("Subtitle Generator Ready!")
-
 
 def format_timestamp(seconds):
 
@@ -28,30 +16,9 @@ def format_timestamp(seconds):
     )
 
 
-def generate_subtitle(audio_path, language="auto"):
+def generate_subtitle(audio_path, segments):
 
     print("\nGenerating Subtitle File...")
-
-    if language == "auto":
-
-        print("Subtitle Language : Auto Detect")
-
-        segments, info = model.transcribe(
-            audio_path,
-            beam_size=5,
-            vad_filter=True
-        )
-
-    else:
-
-        print(f"Subtitle Language : {language}")
-
-        segments, info = model.transcribe(
-            audio_path,
-            beam_size=5,
-            vad_filter=True,
-            language=language
-        )
 
     output_folder = "outputs"
     os.makedirs(output_folder, exist_ok=True)

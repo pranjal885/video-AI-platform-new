@@ -6,16 +6,13 @@ model = None
 
 
 def get_model():
-    """
-    Load the Whisper model only once.
-    """
     global model
 
     if model is None:
         print("Loading Whisper Model...")
 
         model = WhisperModel(
-            "base",
+            "tiny",      # Change to "tiny" if you need lower memory
             device="cpu",
             compute_type="int8"
         )
@@ -27,7 +24,6 @@ def get_model():
 
 def transcribe_audio(audio_path, language="auto"):
 
-    # Load model only when needed
     model = get_model()
 
     print("\n==============================")
@@ -55,9 +51,12 @@ def transcribe_audio(audio_path, language="auto"):
             language=language
         )
 
+    segments = list(segments)
+
     transcript_lines = []
 
     for segment in segments:
+
         text = segment.text.strip()
 
         if text:
@@ -82,6 +81,7 @@ def transcribe_audio(audio_path, language="auto"):
         "w",
         encoding="utf-8"
     ) as file:
+
         file.write(transcript)
 
     print(f"Detected Language : {info.language}")
@@ -90,4 +90,4 @@ def transcribe_audio(audio_path, language="auto"):
     print(f"Segments Found : {len(transcript_lines)}")
     print("Transcription Completed Successfully!\n")
 
-    return transcript, transcript_path
+    return transcript, transcript_path, segments

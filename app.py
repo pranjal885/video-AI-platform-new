@@ -75,9 +75,9 @@ def upload():
         audio_path = extract_audio(filepath)
         print("3. Audio extracted")
 
-        transcript, transcript_path = transcribe_audio(
-            audio_path,
-            language
+        transcript, transcript_path, segments = transcribe_audio(
+              audio_path,
+              language
         )
         print("4. Transcript generated")
 
@@ -86,7 +86,7 @@ def upload():
 
         subtitle_path = generate_subtitle(
             audio_path,
-            language
+            segments
         )
         print("6. Subtitle generated")
 
