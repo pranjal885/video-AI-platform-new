@@ -219,6 +219,12 @@ __marimo__/
 
 # Project generated folders
 uploads/
+*.mp4
+*.mp3
+*.wav
+*.srt
+*.pdf
+*.docx
 audio/
 temp/
 subtitles/

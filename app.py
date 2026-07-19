@@ -1,4 +1,5 @@
 import os
+import traceback
 
 from flask import (
     Flask,
@@ -26,7 +27,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
-# Stores current uploaded file information
 current_video = {
     "filename": "",
     "audio": "",
@@ -48,86 +48,92 @@ def home():
 @app.route("/upload", methods=["POST"])
 def upload():
 
-    if "video" not in request.files:
-        return "No file selected."
+    try:
 
-    file = request.files["video"]
+        print("1. Upload request received")
 
-    if file.filename == "":
-        return "No file selected."
+        if "video" not in request.files:
+            return "No file selected."
 
-    # Get selected language
-    language = request.form.get("language", "auto")
+        file = request.files["video"]
 
-    filename = secure_filename(file.filename)
+        if file.filename == "":
+            return "No file selected."
 
-    filepath = os.path.join(
-        app.config["UPLOAD_FOLDER"],
-        filename
-    )
+        language = request.form.get("language", "auto")
 
-    file.save(filepath)
+        filename = secure_filename(file.filename)
 
-    print("✅ Video Uploaded")
-    print(f"🌍 Selected Language : {language}")
+        filepath = os.path.join(
+            app.config["UPLOAD_FOLDER"],
+            filename
+        )
 
-    audio_path = extract_audio(filepath)
+        file.save(filepath)
+        print("2. Video saved")
 
-    print("✅ Audio Extracted")
+        audio_path = extract_audio(filepath)
+        print("3. Audio extracted")
 
-    # Pass language to Whisper
-    transcript, transcript_path = transcribe_audio(
-        audio_path,
-        language
-    )
+        transcript, transcript_path = transcribe_audio(
+            audio_path,
+            language
+        )
+        print("4. Transcript generated")
 
-    print("✅ Transcript Generated")
+        summary = generate_summary(transcript)
+        print("5. Summary generated")
 
-    summary = generate_summary(transcript)
+        subtitle_path = generate_subtitle(
+            audio_path,
+            language
+        )
+        print("6. Subtitle generated")
 
-    print("✅ Summary Generated")
+        store_transcript(transcript)
+        print("7. Transcript stored in ChromaDB")
 
-    subtitle_path = generate_subtitle(
-    audio_path,
-    language
-    )
-    
-    print("✅ Subtitle Generated")
+        base_name = os.path.splitext(filename)[0]
 
-    store_transcript(transcript)
+        pdf_path = generate_pdf(
+            summary,
+            base_name
+        )
+        print("8. PDF generated")
 
-    print("✅ Transcript Stored in ChromaDB")
+        doc_path = generate_doc(
+            summary,
+            base_name
+        )
+        print("9. DOC generated")
 
-    base_name = os.path.splitext(filename)[0]
+        current_video["filename"] = filename
+        current_video["audio"] = audio_path
+        current_video["transcript"] = transcript
+        current_video["summary"] = summary
+        current_video["transcript_path"] = transcript_path
+        current_video["subtitle_path"] = subtitle_path
+        current_video["pdf_path"] = pdf_path
+        current_video["doc_path"] = doc_path
+        current_video["language"] = language
 
-    pdf_path = generate_pdf(
-        summary,
-        base_name
-    )
+        print("10. Returning result page")
 
-    doc_path = generate_doc(
-        summary,
-        base_name
-    )
+        return render_template(
+            "result.html",
+            filename=current_video["filename"],
+            audio=current_video["audio"],
+            transcript=current_video["transcript"],
+            summary=current_video["summary"],
+            language=current_video["language"]
+        )
 
-    current_video["filename"] = filename
-    current_video["audio"] = audio_path
-    current_video["transcript"] = transcript
-    current_video["summary"] = summary
-    current_video["transcript_path"] = transcript_path
-    current_video["subtitle_path"] = subtitle_path
-    current_video["pdf_path"] = pdf_path
-    current_video["doc_path"] = doc_path
-    current_video["language"] = language
-
-    return render_template(
-        "result.html",
-        filename=current_video["filename"],
-        audio=current_video["audio"],
-        transcript=current_video["transcript"],
-        summary=current_video["summary"],
-        language=current_video["language"]
-    )
+    except Exception as e:
+        print("\n========== ERROR ==========")
+        print(str(e))
+        traceback.print_exc()
+        print("===========================\n")
+        return f"Internal Error: {str(e)}", 500
 
 
 @app.route("/download_transcript")
